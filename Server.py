@@ -18,7 +18,7 @@ def IsCopy(name):
 
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind(('192.168.137.57', 1111))
+server.bind(('localhost', 1111))
 server.listen()
 client,address = server.accept()
 flag= True
@@ -26,18 +26,18 @@ while flag:
     msg = client.recv(2048).decode('utf-8')
     if msg == 'exit':
         flag = False
-    elif msg == 'Opera'or msg == 'opera':
-        IsClick(162,1048)
-        msg = client.recv(2048).decode('utf-8')
+    elif msg == 'Opera' or msg == 'opera':
+        IsClick(162, 1048)
+        url = client.recv(2048).decode('utf-8')  # Получение URL от клиента
         keyboard.press('ctrl')
         keyboard.release('t')
-        keyboard.release('ctrl')
-        IsCopy(msg)
+        IsCopy(url)
         keyboard.press('ctrl')
         keyboard.send('v')
         keyboard.release('ctrl')
         keyboard.send('enter')
+        print(url)
     else:
-        msg = client.recv(2048).decode('utf-8')
+        print(msg)  # Вывод сообщения клиента
 client.close()
 server.close()
