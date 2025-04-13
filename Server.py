@@ -5,6 +5,7 @@ import win32api,win32con
 import time
 import keyboard
 import pyperclip
+import subprocess
 
 def IsClick(x,y):
     win32api.SetCursorPos((x,y))
@@ -18,7 +19,7 @@ def IsCopy(name):
 
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind(('localhost', 1111))
+server.bind(('0.0.0.0', 1111))
 server.listen()
 client,address = server.accept()
 flag= True
@@ -27,7 +28,7 @@ while flag:
     if msg == 'exit':
         flag = False
     elif msg == 'Opera' or msg == 'opera':
-        IsClick(162, 1048)
+        subprocess.Popen(["start", "opera"], shell=True)
         url = client.recv(2048).decode('utf-8')  # Получение URL от клиента
         keyboard.press('ctrl')
         keyboard.release('t')
